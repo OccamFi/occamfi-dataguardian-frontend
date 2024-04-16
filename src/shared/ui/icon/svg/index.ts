@@ -1,0 +1,13 @@
+export { default as app } from "./app.svg?react";
+export { default as certificate } from "./certificate.svg?react";
+export { default as checkCircle } from "./check-circle.svg?react";
+export { default as checkVerified } from "./check-verified.svg?react";
+export { default as chevronRight } from "./chevron-right.svg?react";
+export { default as fileDownload } from "./file-download.svg?react";
+export { default as fileHeart } from "./file-heart.svg?react";
+export { default as heart } from "./heart.svg?react";
+export { default as markerPin } from "./marker-pin.svg?react";
+export { default as occam } from "./occam.svg?react";
+export { default as smile } from "./smile.svg?react";
+export { default as userCircle } from "./user-circle.svg?react";
+export { default as users } from "./users.svg?react";
