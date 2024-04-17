@@ -2,7 +2,7 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: `https://occam-dataguardian.lookhere.tech/query`,
+  schema: `https://stage-api-guardian.occam.fi/query`,
   documents: "src/shared/graphql/**/*.graphql",
   generates: {
     "src/shared/graphql/index.ts": {
