@@ -1,5 +1,6 @@
 mutation CreateTwitterZKCertificate($in: CreateTwitterZKCertificateIn!) {
   createTwitterZKCertificate(in: $in) {
     certificate
+    progress
   }
 }

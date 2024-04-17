@@ -9,15 +9,12 @@ interface GraphQLClientResponse<Data> {
   errors?: GraphQLError[];
 }
 
-const client = new GraphQLClient(
-  `${import.meta.env.VITE_GRAPHQL_SERVER}/query`,
-  {
-    requestMiddleware: (request) => {
-      request.credentials = "include";
-      return request;
-    },
-  }
-);
+const client = new GraphQLClient(`${import.meta.env.VITE_ENDPOINT}`, {
+  requestMiddleware: (request) => {
+    request.credentials = "include";
+    return request;
+  },
+});
 
 export const graphqlRequestFetcher =
   <TData, TVariables extends Variables>(

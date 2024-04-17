@@ -78,6 +78,7 @@ export type CreateTwitterZkCertificateMutation = {
   createTwitterZKCertificate: {
     __typename?: "CreateTwitterZKCertificateOut";
     certificate: string | null;
+    progress: number;
   };
 };
 
@@ -92,6 +93,7 @@ export const CreateTwitterZkCertificateDocument = `
     mutation CreateTwitterZKCertificate($in: CreateTwitterZKCertificateIn!) {
   createTwitterZKCertificate(in: $in) {
     certificate
+    progress
   }
 }
     `;

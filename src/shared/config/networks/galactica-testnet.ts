@@ -4,11 +4,11 @@ export const galacticaAndromeda = {
   blockExplorers: {
     default: {
       name: "BlockScout",
-      url: "https://explorer-andromeda.galactica.com/",
+      url: "https://explorer-reticulum.galactica.com/",
     },
   },
-  id: 41238,
-  name: "Galactica-Andromeda",
+  id: 9302,
+  name: "Galactica-Reticulum",
   nativeCurrency: {
     decimals: 18,
     name: "Galactica",
@@ -16,12 +16,12 @@ export const galacticaAndromeda = {
   },
   rpcUrls: {
     default: {
-      http: ["https://evm-rpc-http-andromeda.galactica.com/"],
-      webSocket: ["wss://evm-rpc-ws-andromeda.galactica.com/"],
+      http: ["https://evm-rpc-http-reticulum.galactica.com/"],
+      webSocket: ["wss://evm-rpc-ws-reticulum.galactica.com/"],
     },
     public: {
-      http: ["https://evm-rpc-http-andromeda.galactica.com/"],
-      webSocket: ["wss://evm-rpc-ws-andromeda.galactica.com/"],
+      http: ["https://evm-rpc-http-reticulum.galactica.com/"],
+      webSocket: ["wss://evm-rpc-ws-reticulum.galactica.com/"],
     },
   },
   testnet: true,
