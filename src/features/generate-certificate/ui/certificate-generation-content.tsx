@@ -65,7 +65,14 @@ export const CertificateGenerationContent = ({
       },
       {
         onSuccess: (data) => {
+          console.log(
+            "data.createTwitterZKCertificate.certificate",
+            data.createTwitterZKCertificate.certificate
+          );
           onNextStep(data.createTwitterZKCertificate.certificate ?? "");
+        },
+        onError: (err) => {
+          console.error("useCreateTwitterZkCertificateMutation err", err);
         },
       }
     );
