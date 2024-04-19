@@ -45,7 +45,7 @@ const modalItems: { iconName: IconName; text: string }[] = [
 type Props = {
   encryptionPubKey: string;
   holderCommitment: string;
-  onNextStep: () => void;
+  onNextStep: (certificate: string) => void;
 };
 
 export const CertificateGenerationContent = ({
@@ -65,12 +65,10 @@ export const CertificateGenerationContent = ({
       },
       {
         onSuccess: (data) => {
-          console.log(data);
+          onNextStep(data.createTwitterZKCertificate.certificate ?? "");
         },
       }
     );
-
-    onNextStep();
   };
 
   return (

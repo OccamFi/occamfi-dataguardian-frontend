@@ -20,6 +20,7 @@ export const GenerateCertificateModal = ({
   onClose,
 }: Props) => {
   const [step, setStep] = useState<CertificateSteps>("generation");
+  const [certificate, setCertificate] = useState<string>("");
 
   return (
     <Modal onClose={onClose}>
@@ -30,10 +31,15 @@ export const GenerateCertificateModal = ({
               <CertificateGenerationContent
                 encryptionPubKey={encryptionPubKey}
                 holderCommitment={holderCommitment}
-                onNextStep={() => setStep("download")}
+                onNextStep={(certificate: string) => {
+                  setCertificate(certificate);
+                  setStep("download");
+                }}
               />
             )}
-            {step === "download" && <GenerationSuccessContent />}
+            {step === "download" && (
+              <GenerationSuccessContent certificate={certificate} />
+            )}
           </Modal.Content>
         </Modal.Overlay>
       </Portal>

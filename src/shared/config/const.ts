@@ -1,5 +1,5 @@
 import { Chain } from "viem";
 
-import { galacticaAndromeda } from "./networks/galactica-testnet";
+import { galacticaReticulum } from "./networks/galactica-testnet";
 
-export const supportedChains: [Chain, ...Chain[]] = [galacticaAndromeda];
+export const supportedChains: [Chain, ...Chain[]] = [galacticaReticulum];

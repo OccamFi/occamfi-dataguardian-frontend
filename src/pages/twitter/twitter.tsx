@@ -20,8 +20,6 @@ export const Twitter = () => {
 
   const { holderCommitment, encryptionPubKey } = useHolderCommitment();
 
-  const tr = true;
-
   return (
     <>
       <div className="flex grow flex-col px-28 pt-[18px]">
@@ -42,7 +40,7 @@ export const Twitter = () => {
 
         <div className="mt-8 flex items-center justify-between">
           <ProviderItem provider="twitter" />
-          {user || tr ? (
+          {user ? (
             <Button
               className="py-2.5 text-sm font-semibold"
               onClick={() => setIsModalOpen(true)}

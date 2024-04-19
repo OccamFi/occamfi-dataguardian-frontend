@@ -4,9 +4,17 @@ import { CertificateCard } from "entities/certificate";
 import { Avatar } from "entities/provider/ui/avatar";
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
+import { downloadTxtFile } from "shared/utils";
 
-export const GenerationSuccessContent = () => {
+type Props = {
+  certificate: string;
+};
+export const GenerationSuccessContent = ({ certificate }: Props) => {
   const [isDownloaded, setIsDownloaded] = useState(false);
+  const downloadHandler = () => {
+    downloadTxtFile("cert-x.txt", certificate);
+    setIsDownloaded(true);
+  };
 
   return (
     <>
@@ -44,9 +52,7 @@ export const GenerationSuccessContent = () => {
         ) : (
           <Button
             className="flex h-11 items-center justify-center gap-1 text-base font-medium"
-            onClick={() => {
-              setIsDownloaded(true);
-            }}
+            onClick={downloadHandler}
           >
             <Icon name="fileDownload" />
             Download{" "}

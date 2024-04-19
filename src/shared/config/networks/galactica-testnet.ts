@@ -1,6 +1,6 @@
 import { Chain } from "viem";
 
-export const galacticaAndromeda = {
+export const galacticaReticulum = {
   blockExplorers: {
     default: {
       name: "BlockScout",
