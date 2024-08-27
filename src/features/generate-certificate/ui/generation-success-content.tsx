@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import axios from "axios";
+
 import { CertificateCard } from "entities/certificate";
 import { Avatar } from "entities/provider/ui/avatar";
 import { Button } from "shared/ui/button";
@@ -11,8 +13,21 @@ type Props = {
 };
 export const GenerationSuccessContent = ({ certificate }: Props) => {
   const [isDownloaded, setIsDownloaded] = useState(false);
+
+  const downloadFn = async () => {
+    const url = `${import.meta.env.VITE_API_HOST}/download/${certificate}`;
+    try {
+      const res = await axios.get(url);
+      const data = res.data;
+
+      downloadTxtFile(data, "name.txt");
+    } catch (err) {
+      console.log("Request certificate error: ", err);
+    }
+  };
+
   const downloadHandler = () => {
-    downloadTxtFile("cert-x.txt", certificate);
+    downloadFn();
     setIsDownloaded(true);
   };
 
