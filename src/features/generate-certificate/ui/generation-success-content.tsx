@@ -20,7 +20,7 @@ export const GenerationSuccessContent = ({ certificate }: Props) => {
       const res = await axios.get(url);
       const data = res.data;
 
-      downloadTxtFile(data, "name.txt");
+      downloadTxtFile(JSON.stringify(data), "cert.txt");
     } catch (err) {
       console.log("Request certificate error: ", err);
     }
