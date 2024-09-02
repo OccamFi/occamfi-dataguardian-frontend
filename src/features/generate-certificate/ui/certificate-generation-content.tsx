@@ -1,11 +1,13 @@
+import { useUnit } from "effector-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
-import { useCreateTwitterZkCertificateMutation } from "shared/graphql";
 import { Button } from "shared/ui/button";
 import { Checkbox } from "shared/ui/checkbox";
 import { Icon, IconName } from "shared/ui/icon";
 import { Spinner } from "shared/ui/spinner";
+
+import { $$certificateModel } from "../model";
 
 const modalItems: { iconName: IconName; text: string }[] = [
   {
@@ -45,38 +47,18 @@ const modalItems: { iconName: IconName; text: string }[] = [
 type Props = {
   encryptionPubKey: string;
   holderCommitment: string;
-  onNextStep: (certificate: string) => void;
 };
 
 export const CertificateGenerationContent = ({
-  onNextStep,
   encryptionPubKey,
   holderCommitment,
 }: Props) => {
-  const mutation = useCreateTwitterZkCertificateMutation();
-
+  const step = useUnit($$certificateModel.$step);
   const handleClick = () => {
-    mutation.mutate(
-      {
-        in: {
-          encryptionPubKey,
-          holderCommitment,
-        },
-      },
-      {
-        onSuccess: (data) => {
-          console.log(
-            "data.createTwitterZKCertificate.certificate",
-            data.createTwitterZKCertificate.certificate
-          );
-          onNextStep(data.createTwitterZKCertificate.certificate ?? "");
-        },
-        onError: (err) => {
-          onNextStep("1");
-          console.error("useCreateTwitterZkCertificateMutation err", err);
-        },
-      }
-    );
+    $$certificateModel.generateCertificate({
+      encryptionPubKey,
+      holderCommitment,
+    });
   };
 
   return (
@@ -92,11 +74,11 @@ export const CertificateGenerationContent = ({
       <main
         className={twMerge(
           "relative mt-5 overflow-hidden rounded-xl border-2 border-dodgerBlue p-5",
-          mutation.isPending && "border-dodgerBlue/30"
+          step === "generation" && "border-dodgerBlue/30"
         )}
       >
         <AnimatePresence>
-          {mutation.isPending && (
+          {step === "generation" && (
             <motion.div
               animate={{ opacity: 1, transition: { duration: 0.2 } }}
               className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center gap-4 bg-white"
@@ -135,7 +117,7 @@ export const CertificateGenerationContent = ({
       <footer className="mt-5 flex flex-col">
         <Button
           className="h-11 items-center justify-center text-base font-medium"
-          disabled={mutation.isPending}
+          disabled={step === "generation"}
           onClick={handleClick}
         >
           Generate Certificate

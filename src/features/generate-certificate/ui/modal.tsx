@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useUnit } from "effector-react";
 
 import { Modal } from "shared/ui/modal";
 import { ModalProps } from "shared/ui/modal/modal";
 import { Portal } from "shared/ui/portal";
 
+import { $$certificateModel } from "../model";
 import { CertificateGenerationContent } from "./certificate-generation-content";
 import { GenerationSuccessContent } from "./generation-success-content";
-
-type CertificateSteps = "download" | "generation";
 
 type Props = {
   encryptionPubKey: string;
@@ -19,8 +18,8 @@ export const GenerateCertificateModal = ({
   holderCommitment,
   onClose,
 }: Props) => {
-  const [step, setStep] = useState<CertificateSteps>("generation");
-  const [certificate, setCertificate] = useState<string>("");
+  const step = useUnit($$certificateModel.$step);
+  const certificate = useUnit($$certificateModel.$certificate);
 
   return (
     <Modal onClose={onClose}>
@@ -31,10 +30,6 @@ export const GenerateCertificateModal = ({
               <CertificateGenerationContent
                 encryptionPubKey={encryptionPubKey}
                 holderCommitment={holderCommitment}
-                onNextStep={(certificate: string) => {
-                  setCertificate(certificate);
-                  setStep("download");
-                }}
               />
             )}
             {step === "download" && (

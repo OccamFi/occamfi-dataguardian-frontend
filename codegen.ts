@@ -4,14 +4,14 @@ const config: CodegenConfig = {
   overwrite: true,
   // https://stage-api-guardian.occam.fi/query
   // https://occam-dataguardian.lookhere.tech/query
-  schema: `https://occam-dataguardian.lookhere.tech/query`,
+  schema: "https://stage-api-guardian.occam.fi/query",
   documents: "src/shared/graphql/**/*.graphql",
   generates: {
     "src/shared/graphql/index.ts": {
       plugins: [
         "typescript",
         "typescript-operations",
-        "typescript-react-query",
+        "typescript-graphql-request",
       ],
       config: {
         exposeQueryKeys: true,
@@ -20,16 +20,6 @@ const config: CodegenConfig = {
         avoidOptionals: true,
         constEnums: true,
         enumsAsTypes: true,
-
-        fetcher: {
-          func: "./fetcher.ts#graphqlRequestFetcher",
-          fetchParams: {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          },
-        },
       },
     },
   },

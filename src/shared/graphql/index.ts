@@ -1,12 +1,5 @@
-import {
-  useMutation,
-  useQuery,
-  useSuspenseQuery,
-  UseMutationOptions,
-  UseQueryOptions,
-  UseSuspenseQueryOptions,
-} from "@tanstack/react-query";
-import { graphqlRequestFetcher } from "./fetcher.ts";
+import { GraphQLClient, RequestOptions } from "graphql-request";
+import gql from "graphql-tag";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -27,6 +20,7 @@ export type Incremental<T> =
   | {
       [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
     };
+type GraphQLClientRequestHeaders = RequestOptions["requestHeaders"];
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -89,93 +83,73 @@ export type GetUserQuery = {
   user: { __typename?: "User"; username: string; avatarUrl: string } | null;
 };
 
-export const CreateTwitterZkCertificateDocument = `
-    mutation CreateTwitterZKCertificate($in: CreateTwitterZKCertificateIn!) {
-  createTwitterZKCertificate(in: $in) {
-    certificate
-    progress
+export const CreateTwitterZkCertificateDocument = gql`
+  mutation CreateTwitterZKCertificate($in: CreateTwitterZKCertificateIn!) {
+    createTwitterZKCertificate(in: $in) {
+      certificate
+      progress
+    }
   }
+`;
+export const GetUserDocument = gql`
+  query GetUser {
+    user {
+      username
+      avatarUrl
+    }
+  }
+`;
+
+export type SdkFunctionWrapper = <T>(
+  action: (requestHeaders?: Record<string, string>) => Promise<T>,
+  operationName: string,
+  operationType?: string,
+  variables?: any
+) => Promise<T>;
+
+const defaultWrapper: SdkFunctionWrapper = (
+  action,
+  _operationName,
+  _operationType,
+  _variables
+) => action();
+
+export function getSdk(
+  client: GraphQLClient,
+  withWrapper: SdkFunctionWrapper = defaultWrapper
+) {
+  return {
+    CreateTwitterZKCertificate(
+      variables: CreateTwitterZkCertificateMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<CreateTwitterZkCertificateMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateTwitterZkCertificateMutation>(
+            CreateTwitterZkCertificateDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "CreateTwitterZKCertificate",
+        "mutation",
+        variables
+      );
+    },
+    GetUser(
+      variables?: GetUserQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<GetUserQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetUserQuery>(GetUserDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "GetUser",
+        "query",
+        variables
+      );
+    },
+  };
 }
-    `;
-
-export const useCreateTwitterZkCertificateMutation = <
-  TError = unknown,
-  TContext = unknown,
->(
-  options?: UseMutationOptions<
-    CreateTwitterZkCertificateMutation,
-    TError,
-    CreateTwitterZkCertificateMutationVariables,
-    TContext
-  >
-) => {
-  return useMutation<
-    CreateTwitterZkCertificateMutation,
-    TError,
-    CreateTwitterZkCertificateMutationVariables,
-    TContext
-  >({
-    mutationKey: ["CreateTwitterZKCertificate"],
-    mutationFn: (variables?: CreateTwitterZkCertificateMutationVariables) =>
-      graphqlRequestFetcher<
-        CreateTwitterZkCertificateMutation,
-        CreateTwitterZkCertificateMutationVariables
-      >(CreateTwitterZkCertificateDocument, variables)(),
-    ...options,
-  });
-};
-
-export const GetUserDocument = `
-    query GetUser {
-  user {
-    username
-    avatarUrl
-  }
-}
-    `;
-
-export const useGetUserQuery = <TData = GetUserQuery, TError = unknown>(
-  variables?: GetUserQueryVariables,
-  options?: Omit<UseQueryOptions<GetUserQuery, TError, TData>, "queryKey"> & {
-    queryKey?: UseQueryOptions<GetUserQuery, TError, TData>["queryKey"];
-  }
-) => {
-  return useQuery<GetUserQuery, TError, TData>({
-    queryKey: variables === undefined ? ["GetUser"] : ["GetUser", variables],
-    queryFn: graphqlRequestFetcher<GetUserQuery, GetUserQueryVariables>(
-      GetUserDocument,
-      variables
-    ),
-    ...options,
-  });
-};
-
-useGetUserQuery.getKey = (variables?: GetUserQueryVariables) =>
-  variables === undefined ? ["GetUser"] : ["GetUser", variables];
-
-export const useSuspenseGetUserQuery = <TData = GetUserQuery, TError = unknown>(
-  variables?: GetUserQueryVariables,
-  options?: Omit<
-    UseSuspenseQueryOptions<GetUserQuery, TError, TData>,
-    "queryKey"
-  > & {
-    queryKey?: UseSuspenseQueryOptions<GetUserQuery, TError, TData>["queryKey"];
-  }
-) => {
-  return useSuspenseQuery<GetUserQuery, TError, TData>({
-    queryKey:
-      variables === undefined
-        ? ["GetUserSuspense"]
-        : ["GetUserSuspense", variables],
-    queryFn: graphqlRequestFetcher<GetUserQuery, GetUserQueryVariables>(
-      GetUserDocument,
-      variables
-    ),
-    ...options,
-  });
-};
-
-useSuspenseGetUserQuery.getKey = (variables?: GetUserQueryVariables) =>
-  variables === undefined
-    ? ["GetUserSuspense"]
-    : ["GetUserSuspense", variables];
+export type Sdk = ReturnType<typeof getSdk>;

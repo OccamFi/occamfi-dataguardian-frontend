@@ -1,22 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useUnit } from "effector-react";
+
 import { CertificateCard } from "entities/certificate";
 import { ProviderItem } from "entities/provider";
 import { Avatar } from "entities/provider/ui/avatar";
 import { GenerateCertificateModal } from "features/generate-certificate";
 import { Footer } from "pages/ui/footer";
 import { Header } from "pages/ui/header";
-import { useGetUserQuery } from "shared/graphql";
 import { useHolderCommitment } from "shared/providers/holder-commitment-guard";
 import { Breadcrumbs } from "shared/ui/breadcrumbs";
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
 
+import { $$twitterModel } from "./model";
+
 export const Twitter = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const query = useGetUserQuery();
-  const user = query.data?.user;
+  const user = useUnit($$twitterModel.$user);
 
   const { holderCommitment, encryptionPubKey } = useHolderCommitment();
 
