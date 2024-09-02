@@ -26,12 +26,13 @@ export const GenerateCertificateModal = ({
       <Portal>
         <Modal.Overlay>
           <Modal.Content className="w-[400px] px-6 pb-6 pt-9">
-            {step === "generation" && (
-              <CertificateGenerationContent
-                encryptionPubKey={encryptionPubKey}
-                holderCommitment={holderCommitment}
-              />
-            )}
+            {step === "generation" ||
+              (step === "idle" && (
+                <CertificateGenerationContent
+                  encryptionPubKey={encryptionPubKey}
+                  holderCommitment={holderCommitment}
+                />
+              ))}
             {step === "download" && (
               <GenerationSuccessContent certificate={certificate} />
             )}

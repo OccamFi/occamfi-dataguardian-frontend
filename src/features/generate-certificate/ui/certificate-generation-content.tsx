@@ -54,6 +54,7 @@ export const CertificateGenerationContent = ({
   holderCommitment,
 }: Props) => {
   const step = useUnit($$certificateModel.$step);
+  console.log(step);
   const handleClick = () => {
     $$certificateModel.generateCertificate({
       encryptionPubKey,
