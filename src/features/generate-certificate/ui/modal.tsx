@@ -19,6 +19,7 @@ export const GenerateCertificateModal = ({
   onClose,
 }: Props) => {
   const step = useUnit($$certificateModel.$step);
+  console.log(step);
   const certificate = useUnit($$certificateModel.$certificate);
 
   return (
