@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
       svgr(),
       tsconfigPaths(),
       nodePolyfills(),
-      isProd && removeConsole(),
+      // isProd && removeConsole(),
       isDev &&
         checker({
           eslint: {
