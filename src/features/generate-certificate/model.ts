@@ -56,7 +56,7 @@ const createModel = () => {
   });
 
   sample({
-    source: generateCertificateFx,
+    source: generateCertificate,
     target: stepApi.generation,
   });
 
