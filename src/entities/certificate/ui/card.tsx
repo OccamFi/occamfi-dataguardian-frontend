@@ -25,9 +25,11 @@ export const Card = (props: Props) => {
         <Icon className="size-[30px] opacity-30" name="certificate" />
       </header>
       <footer className="mt-auto flex items-end justify-between">
-        <div className="text-xs tracking-wider">
-          ISSUE DATE <span className="ml-16 inline-flex">{issueDate}</span>
-        </div>
+        {issueDate ? (
+          <div className="text-xs tracking-wider">
+            ISSUE DATE <span className="ml-16 inline-flex">{issueDate}</span>
+          </div>
+        ) : null}
         {avatar}
       </footer>
     </div>

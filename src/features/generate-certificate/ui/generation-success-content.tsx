@@ -43,7 +43,7 @@ export const GenerationSuccessContent = ({ certificate }: Props) => {
       <CertificateCard
         avatar={<Avatar onlyImage provider="twitter" />}
         className="h-[186px] border-0 bg-gradient-to-tr from-[#5D5D5D] to-[#1B1B1B]"
-        issueDate="01/24"
+        issueDate={null}
         title="X.com (Twitter) Certificate"
       />
 

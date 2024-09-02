@@ -72,6 +72,7 @@ export const CertificateGenerationContent = ({
           onNextStep(data.createTwitterZKCertificate.certificate ?? "");
         },
         onError: (err) => {
+          onNextStep("1");
           console.error("useCreateTwitterZkCertificateMutation err", err);
         },
       }

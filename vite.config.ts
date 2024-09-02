@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: "https://occam-dataguardian.lookhere.tech",
+          target: "https://stage-api-guardian.occam.fi",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
