@@ -7,6 +7,7 @@ import reddit from "./assets/reddit.svg";
 import snapchat from "./assets/snapchat.svg";
 import telegram from "./assets/telegram-logo.png";
 import tikTok from "./assets/tiktok.svg";
+import uniswap from "./assets/uniswap.png";
 import weibo from "./assets/weibo.svg";
 import x from "./assets/x-logo.png";
 
@@ -18,6 +19,14 @@ export const providers = {
     imageSrc: x,
     link: "/provider/x",
     name: "X.com (Twitter)",
+  },
+  uniswap: {
+    type: "DEX",
+    description: "DEX",
+    imageSrc: uniswap,
+    // link: "/provider/telegram",
+    link: "/provider/uniswap",
+    name: "Uniswap",
   },
   telegram: {
     type: "Social media",

@@ -68,6 +68,7 @@ export const Dev = () => {
       >
         {isConnected ? "Disconnect" : "Connect"}
       </button>
+
       <button className="block" onClick={handleGetSnap}>
         Get Snap
       </button>
