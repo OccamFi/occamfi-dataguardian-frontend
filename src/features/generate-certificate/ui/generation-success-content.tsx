@@ -6,7 +6,7 @@ import { CertificateCard } from "entities/certificate";
 import { Avatar } from "entities/provider/ui/avatar";
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
-import { downloadTxtFile } from "shared/utils";
+import { downloadObjectAsJson } from "shared/utils/download-object-as-json";
 
 type Props = {
   certificate: string;
@@ -20,7 +20,7 @@ export const GenerationSuccessContent = ({ certificate }: Props) => {
       const res = await axios.get(url);
       const data = res.data;
 
-      downloadTxtFile(JSON.stringify(data), "cert.txt");
+      downloadObjectAsJson(JSON.stringify(data), "cert.json");
     } catch (err) {
       console.log("Request certificate error: ", err);
     }
