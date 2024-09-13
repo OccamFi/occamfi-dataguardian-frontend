@@ -11,36 +11,28 @@ import { $$certificateModel } from "../model";
 
 const modalItems: { iconName: IconName; text: string }[] = [
   {
-    iconName: "checkCircle",
-    text: "Created 01 March 2003",
-  },
-  {
     iconName: "userCircle",
-    text: "21 age",
+    text: "Username & X id",
   },
   {
-    iconName: "markerPin",
-    text: "Tokyo (Japan)",
-  },
-  {
-    iconName: "checkVerified",
-    text: "Tokyo (Japan)",
+    iconName: "checkCircle",
+    text: "Date of creation ",
   },
   {
     iconName: "users",
-    text: "15,294 Followers",
+    text: "Number of followers",
   },
   {
-    iconName: "smile",
-    text: "1,295 Friends",
-  },
-  {
-    iconName: "heart",
-    text: "1,390,042 Likes",
+    iconName: "users",
+    text: "Number of following",
   },
   {
     iconName: "fileHeart",
-    text: "1,051 Posts",
+    text: "Number of tweets",
+  },
+  {
+    iconName: "checkVerified",
+    text: "Verification status",
   },
 ];
 
@@ -54,7 +46,6 @@ export const CertificateGenerationContent = ({
   holderCommitment,
 }: Props) => {
   const step = useUnit($$certificateModel.$step);
-  console.log(step);
   const handleClick = () => {
     $$certificateModel.generateCertificate({
       encryptionPubKey,

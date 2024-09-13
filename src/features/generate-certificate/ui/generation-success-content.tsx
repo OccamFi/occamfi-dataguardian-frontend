@@ -31,6 +31,11 @@ export const GenerationSuccessContent = ({ certificate }: Props) => {
     setIsDownloaded(true);
   };
 
+  const uploadGalaClick = () => {
+    const url = "https://cypherbook-stage.galactica.com/my-certificates ";
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <>
       <header className="mb-5 flex flex-col items-center justify-center">
@@ -47,22 +52,22 @@ export const GenerationSuccessContent = ({ certificate }: Props) => {
         title="X.com (Twitter) Certificate"
       />
 
-      <footer className="mt-5 flex flex-col gap-2">
+      <footer className="mt-5 flex flex-col gap-2 font-medium">
         {isDownloaded ? (
           <>
-            <Button className="flex h-11 items-center justify-center gap-1 text-base font-medium ">
-              <Icon
-                name="checkCircle"
-                svgClassName="stroke-current text-white/50"
-              />
-              Certificate downloaded
+            <Button className="flex h-11" onClick={uploadGalaClick}>
+              Upload to Galactica
             </Button>
-            <Button
-              className="flex h-11 items-center justify-center gap-1 text-base font-medium"
-              theme="white"
-            >
-              Back to Home page
-            </Button>
+            <div className="flex justify-center">
+              <div className="flex items-center space-x-2">
+                <Icon
+                  name="checkCircle"
+                  svgClassName="stroke-current text-black/50"
+                />
+
+                <span className="text-black">Certificate downloaded</span>
+              </div>
+            </div>
           </>
         ) : (
           <Button
@@ -70,8 +75,7 @@ export const GenerationSuccessContent = ({ certificate }: Props) => {
             onClick={downloadHandler}
           >
             <Icon name="fileDownload" />
-            Download{" "}
-            <span className="font-semibold text-white/50">[24.10.24]</span>
+            Download
           </Button>
         )}
       </footer>
