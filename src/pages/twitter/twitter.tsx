@@ -23,11 +23,11 @@ export const Twitter = () => {
   const user = useUnit($$twitterModel.$user);
 
   useEffect(() => {
-    if (user && !isModalOpen && !hasClicked) {
+    if (user && !hasClicked) {
       setIsModalOpen(true);
       setHasClicked(true);
     }
-  }, [user, isModalOpen, hasClicked, setHasClicked]);
+  }, [user, hasClicked, setHasClicked]);
 
   const { holderCommitment, encryptionPubKey } = useHolderCommitment();
 
