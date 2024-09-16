@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useLocalStorage } from "@uidotdev/usehooks";
 import { useUnit } from "effector-react";
 
 import { CertificateCard } from "entities/certificate";
@@ -18,7 +19,15 @@ import { $$twitterModel } from "./model";
 
 export const Twitter = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasClicked, setHasClicked] = useLocalStorage("hasClicked", false);
   const user = useUnit($$twitterModel.$user);
+
+  useEffect(() => {
+    if (user && !isModalOpen && !hasClicked) {
+      setIsModalOpen(true);
+      setHasClicked(true);
+    }
+  }, [user, isModalOpen, hasClicked, setHasClicked]);
 
   const { holderCommitment, encryptionPubKey } = useHolderCommitment();
 
