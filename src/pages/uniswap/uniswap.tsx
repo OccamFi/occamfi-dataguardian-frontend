@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useAccount, useConnect, useDisconnect, useSignMessage } from "wagmi";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { injected } from "wagmi/connectors";
 
 import { CertificateCard } from "entities/certificate";
@@ -10,70 +10,22 @@ import { Avatar } from "entities/provider/ui/avatar";
 import { GenerateCertificateModal } from "features/generate-certificate";
 import { Footer } from "pages/ui/footer";
 import { Header } from "pages/ui/header";
+import { useUniswapAuthMutation } from "shared/api";
 import { useHolderCommitment } from "shared/providers/holder-commitment-guard";
 import { Breadcrumbs } from "shared/ui/breadcrumbs";
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 
 export const Uniswap = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { isConnected, address } = useAccount();
-  const { signMessage } = useSignMessage();
-
-  const getChallengeFn = (): Promise<{ data: { challenge: string } }> =>
-    axios.post("/api/challenge", {
-      user: address,
-    });
-
-  const signFn = ({
-    signature,
-    challenge,
-  }: {
-    signature: string;
-    challenge: string;
-  }): Promise<{ data: { challenge: string } }> =>
-    axios.post(
-      "/api/sign-in",
-      {
-        signature,
-        challenge,
-      },
-      { withCredentials: true }
-    );
-
-  const signinParams = useMutation({
-    mutationFn: signFn,
-    onSuccess: (data) => {
-      console.log("sign data:");
-      console.log(data);
-    },
-  });
-
-  const { mutate } = useMutation({
-    mutationFn: getChallengeFn,
-    onSuccess: ({ data }) => {
-      signMessage(
-        {
-          message: data.challenge,
-        },
-        {
-          onSuccess: (sign) =>
-            signinParams.mutate({
-              signature: sign.substring(2),
-              challenge: data.challenge,
-            }),
-        }
-      );
-    },
-  });
+  const { isConnected } = useAccount();
+  const uniswapAuthMutation = useUniswapAuthMutation();
 
   const { connect } = useConnect({
     mutation: {
       onSuccess: () => {
-        mutate();
+        uniswapAuthMutation.mutate();
       },
     },
   });
