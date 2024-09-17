@@ -66,12 +66,12 @@ export const Uniswap = () => {
               >
                 Generate certificate
               </Button>
-              <Button
-                className="py-2.5 text-sm font-semibold"
-                onClick={() => disconnect()}
-              >
-                Disconnect
-              </Button>
+              {/* <Button */}
+              {/*   className="py-2.5 text-sm font-semibold" */}
+              {/*   onClick={() => disconnect()} */}
+              {/* > */}
+              {/*   Disconnect */}
+              {/* </Button> */}
             </>
           ) : (
             <Button
