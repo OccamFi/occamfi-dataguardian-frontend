@@ -11,6 +11,7 @@ import { GenerateCertificateModal } from "features/generate-certificate";
 import { Footer } from "pages/ui/footer";
 import { Header } from "pages/ui/header";
 import { useUniswapAuthMutation } from "shared/api";
+import { useGetUserQuery } from "shared/api/getUserQuery";
 import { useHolderCommitment } from "shared/providers/holder-commitment-guard";
 import { Breadcrumbs } from "shared/ui/breadcrumbs";
 import { Button } from "shared/ui/button";
@@ -21,6 +22,8 @@ export const Uniswap = () => {
 
   const { isConnected } = useAccount();
   const uniswapAuthMutation = useUniswapAuthMutation();
+  const userData = useGetUserQuery();
+  const user = Boolean(userData.data);
 
   const { connect } = useConnect({
     mutation: {
@@ -58,7 +61,7 @@ export const Uniswap = () => {
 
         <div className="mt-8 flex items-center justify-between">
           <ProviderItem provider="uniswap" />
-          {isConnected ? (
+          {isConnected && user ? (
             <>
               <Button
                 className="py-2.5 text-sm font-semibold"
