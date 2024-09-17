@@ -48,7 +48,7 @@ const RAW_RUNTIME_STATE =
           ["@uidotdev/usehooks", "virtual:5f667c73984ed00ed0af2d2ee5bb7487501bcb7981faa0f3174f6b4e10779d128272858d90e1bd616db7bd20b70e6922af9582ba35aeace0a368e003ee8b65c2#npm:2.4.1"],\
           ["@vitejs/plugin-react-swc", "virtual:5f667c73984ed00ed0af2d2ee5bb7487501bcb7981faa0f3174f6b4e10779d128272858d90e1bd616db7bd20b70e6922af9582ba35aeace0a368e003ee8b65c2#npm:3.6.0"],\
           ["autoprefixer", "virtual:5f667c73984ed00ed0af2d2ee5bb7487501bcb7981faa0f3174f6b4e10779d128272858d90e1bd616db7bd20b70e6922af9582ba35aeace0a368e003ee8b65c2#npm:10.4.18"],\
-          ["axios", "npm:1.7.5"],\
+          ["axios", "npm:1.7.7"],\
           ["effector", "npm:23.2.2"],\
           ["effector-react", "virtual:5f667c73984ed00ed0af2d2ee5bb7487501bcb7981faa0f3174f6b4e10779d128272858d90e1bd616db7bd20b70e6922af9582ba35aeace0a368e003ee8b65c2#npm:23.2.1"],\
           ["eslint", "npm:8.57.0"],\
@@ -6367,11 +6367,11 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["axios", [\
-      ["npm:1.7.5", {\
-        "packageLocation": "./.yarn/cache/axios-npm-1.7.5-b23f777d13-6cbcfe943a.zip/node_modules/axios/",\
+      ["npm:1.7.7", {\
+        "packageLocation": "./.yarn/cache/axios-npm-1.7.7-cfbedc233d-7f875ea13b.zip/node_modules/axios/",\
         "packageDependencies": [\
-          ["axios", "npm:1.7.5"],\
-          ["follow-redirects", "virtual:b23f777d131257fe06b28a56cd59d536ade6094d2d5cddf79ebcd90286ea121fbc1c0c5f6efdf33e86bbb9ba730236b40392ad6a044a1800798c0976b1e86464#npm:1.15.6"],\
+          ["axios", "npm:1.7.7"],\
+          ["follow-redirects", "virtual:cfbedc233d4c16068d815547ad303dec1092fdb3b8bb4ec9ab9c56bdd55b4e87650c7a525a88805756f4d2819c03abfd96a9983cfa927fedf995d1b8b879db38#npm:1.15.6"],\
           ["form-data", "npm:4.0.0"],\
           ["proxy-from-env", "npm:1.1.0"]\
         ],\
@@ -9126,10 +9126,10 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:b23f777d131257fe06b28a56cd59d536ade6094d2d5cddf79ebcd90286ea121fbc1c0c5f6efdf33e86bbb9ba730236b40392ad6a044a1800798c0976b1e86464#npm:1.15.6", {\
-        "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-09c9d52354/0/cache/follow-redirects-npm-1.15.6-50635fe51d-70c7612c4c.zip/node_modules/follow-redirects/",\
+      ["virtual:cfbedc233d4c16068d815547ad303dec1092fdb3b8bb4ec9ab9c56bdd55b4e87650c7a525a88805756f4d2819c03abfd96a9983cfa927fedf995d1b8b879db38#npm:1.15.6", {\
+        "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-ccbb070eb1/0/cache/follow-redirects-npm-1.15.6-50635fe51d-70c7612c4c.zip/node_modules/follow-redirects/",\
         "packageDependencies": [\
-          ["follow-redirects", "virtual:b23f777d131257fe06b28a56cd59d536ade6094d2d5cddf79ebcd90286ea121fbc1c0c5f6efdf33e86bbb9ba730236b40392ad6a044a1800798c0976b1e86464#npm:1.15.6"],\
+          ["follow-redirects", "virtual:cfbedc233d4c16068d815547ad303dec1092fdb3b8bb4ec9ab9c56bdd55b4e87650c7a525a88805756f4d2819c03abfd96a9983cfa927fedf995d1b8b879db38#npm:1.15.6"],\
           ["@types/debug", null],\
           ["debug", null]\
         ],\
@@ -15686,7 +15686,7 @@ const RAW_RUNTIME_STATE =
           ["@uidotdev/usehooks", "virtual:5f667c73984ed00ed0af2d2ee5bb7487501bcb7981faa0f3174f6b4e10779d128272858d90e1bd616db7bd20b70e6922af9582ba35aeace0a368e003ee8b65c2#npm:2.4.1"],\
           ["@vitejs/plugin-react-swc", "virtual:5f667c73984ed00ed0af2d2ee5bb7487501bcb7981faa0f3174f6b4e10779d128272858d90e1bd616db7bd20b70e6922af9582ba35aeace0a368e003ee8b65c2#npm:3.6.0"],\
           ["autoprefixer", "virtual:5f667c73984ed00ed0af2d2ee5bb7487501bcb7981faa0f3174f6b4e10779d128272858d90e1bd616db7bd20b70e6922af9582ba35aeace0a368e003ee8b65c2#npm:10.4.18"],\
-          ["axios", "npm:1.7.5"],\
+          ["axios", "npm:1.7.7"],\
           ["effector", "npm:23.2.2"],\
           ["effector-react", "virtual:5f667c73984ed00ed0af2d2ee5bb7487501bcb7981faa0f3174f6b4e10779d128272858d90e1bd616db7bd20b70e6922af9582ba35aeace0a368e003ee8b65c2#npm:23.2.1"],\
           ["eslint", "npm:8.57.0"],\

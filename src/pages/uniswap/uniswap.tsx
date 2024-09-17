@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useSignMessage } from "wagmi";
 import { injected } from "wagmi/connectors";
 
 import { CertificateCard } from "entities/certificate";
@@ -14,15 +14,77 @@ import { useHolderCommitment } from "shared/providers/holder-commitment-guard";
 import { Breadcrumbs } from "shared/ui/breadcrumbs";
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 export const Uniswap = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { isConnected, address } = useAccount();
-  const { connect } = useConnect();
-  const { disconnect } = useDisconnect();
+  const { signMessage } = useSignMessage();
 
+  const getChallengeFn = (): Promise<{ data: { challenge: string } }> =>
+    axios.post("/api/challenge", {
+      user: address,
+    });
+
+  const signFn = ({
+    signature,
+    challenge,
+  }: {
+    signature: string;
+    challenge: string;
+  }): Promise<{ data: { challenge: string } }> =>
+    axios.post(
+      "/api/sign-in",
+      {
+        signature,
+        challenge,
+      },
+      { withCredentials: true }
+    );
+
+  const signinParams = useMutation({
+    mutationFn: signFn,
+    onSuccess: (data) => {
+      console.log("sign data:");
+      console.log(data);
+    },
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: getChallengeFn,
+    onSuccess: ({ data }) => {
+      signMessage(
+        {
+          message: data.challenge,
+        },
+        {
+          onSuccess: (sign) =>
+            signinParams.mutate({
+              signature: sign.substring(2),
+              challenge: data.challenge,
+            }),
+        }
+      );
+    },
+  });
+
+  const { connect } = useConnect({
+    mutation: {
+      onSuccess: () => {
+        mutate();
+      },
+    },
+  });
+  const { disconnect } = useDisconnect();
   const { holderCommitment, encryptionPubKey } = useHolderCommitment();
+
+  const handleConnectAccountClick = () => {
+    connect({
+      connector: injected({ target: "metaMask" }),
+    });
+  };
 
   return (
     <>
@@ -52,13 +114,17 @@ export const Uniswap = () => {
               >
                 Generate certificate
               </Button>
+              <Button
+                className="py-2.5 text-sm font-semibold"
+                onClick={() => disconnect()}
+              >
+                Disconnect
+              </Button>
             </>
           ) : (
             <Button
               className="py-2.5 text-sm font-semibold"
-              onClick={() =>
-                connect({ connector: injected({ target: "metaMask" }) })
-              }
+              onClick={handleConnectAccountClick}
             >
               Connect Account
             </Button>
