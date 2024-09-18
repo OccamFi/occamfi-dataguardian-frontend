@@ -24,6 +24,7 @@ export const Uniswap = () => {
   const uniswapAuthMutation = useUniswapAuthMutation();
   const userData = useGetUserQuery();
   const user = Boolean(userData.data);
+  console.log(user);
 
   const { connect } = useConnect({
     mutation: {

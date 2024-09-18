@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useAccount, useSignMessage } from "wagmi";
 
@@ -31,6 +31,14 @@ const signApi = ({
 export const useUniswapAuthMutation = () => {
   const { signMessage } = useSignMessage();
   const { address } = useAccount();
+  const client = useQueryClient();
+
+  const signMutation = useMutation({
+    mutationFn: signApi,
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["user"] });
+    },
+  });
 
   return useMutation({
     mutationFn: () => getChallengeApi(address),
@@ -41,7 +49,7 @@ export const useUniswapAuthMutation = () => {
         },
         {
           onSuccess: (sign) =>
-            signApi({
+            signMutation.mutate({
               signature: sign.substring(2),
               challenge: data.challenge,
             }),
