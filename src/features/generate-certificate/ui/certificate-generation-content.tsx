@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import { useUnit } from "effector-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
@@ -9,33 +12,6 @@ import { Spinner } from "shared/ui/spinner";
 
 import { $$certificateModel } from "../model";
 
-const modalItems: { iconName: IconName; text: string }[] = [
-  {
-    iconName: "userCircle",
-    text: "Username & X id",
-  },
-  {
-    iconName: "checkCircle",
-    text: "Date of creation ",
-  },
-  {
-    iconName: "users",
-    text: "Number of followers",
-  },
-  {
-    iconName: "users",
-    text: "Number of following",
-  },
-  {
-    iconName: "fileHeart",
-    text: "Number of tweets",
-  },
-  {
-    iconName: "checkVerified",
-    text: "Verification status",
-  },
-];
-
 type Props = {
   encryptionPubKey: string;
   holderCommitment: string;
@@ -45,9 +21,24 @@ export const CertificateGenerationContent = ({
   encryptionPubKey,
   holderCommitment,
 }: Props) => {
+  const [certificateType, setCertificateType] = useState<"twitter" | "uniswap">(
+    "twitter"
+  );
+  const location = useLocation();
+
+  useEffect(() => {
+    // @TODO:
+    if (location.pathname.includes("uniswap")) {
+      setCertificateType("uniswap");
+    } else {
+      setCertificateType("twitter");
+    }
+  }, [location.pathname]);
+
   const step = useUnit($$certificateModel.$step);
   const handleClick = () => {
     $$certificateModel.generateCertificate({
+      certificateType,
       encryptionPubKey,
       holderCommitment,
     });
@@ -95,9 +86,9 @@ export const CertificateGenerationContent = ({
         </div>
 
         <ul className="mt-5 flex flex-col gap-y-3">
-          {modalItems.map((item) => {
+          {twitterFields.map((item, index) => {
             return (
-              <li className="flex gap-x-3" key={item.iconName}>
+              <li className="flex gap-x-3" key={`${item.iconName}-${index}`}>
                 <Icon className="text-dodgerBlue" name={item.iconName} />
                 <span className="font-light leading-6">{item.text}</span>
               </li>
@@ -118,3 +109,57 @@ export const CertificateGenerationContent = ({
     </>
   );
 };
+
+const twitterFields: { iconName: IconName; text: string }[] = [
+  {
+    iconName: "userCircle",
+    text: "Username & X id",
+  },
+  {
+    iconName: "checkCircle",
+    text: "Date of creation ",
+  },
+  {
+    iconName: "users",
+    text: "Number of followers",
+  },
+  {
+    iconName: "users",
+    text: "Number of following",
+  },
+  {
+    iconName: "fileHeart",
+    text: "Number of tweets",
+  },
+  {
+    iconName: "checkVerified",
+    text: "Verification status",
+  },
+];
+
+const uniswapFields: { iconName: IconName; text: string }[] = [
+  {
+    iconName: "userCircle",
+    text: "Username & X id",
+  },
+  {
+    iconName: "checkCircle",
+    text: "Date of creation ",
+  },
+  {
+    iconName: "users",
+    text: "Number of followers",
+  },
+  {
+    iconName: "users",
+    text: "Number of following",
+  },
+  {
+    iconName: "fileHeart",
+    text: "Number of tweets",
+  },
+  {
+    iconName: "checkVerified",
+    text: "Verification status",
+  },
+];

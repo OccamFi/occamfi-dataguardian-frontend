@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useAccount, useConnect, useDisconnect } from "wagmi";
@@ -8,6 +8,7 @@ import { CertificateCard } from "entities/certificate";
 import { ProviderItem } from "entities/provider";
 import { Avatar } from "entities/provider/ui/avatar";
 import { GenerateCertificateModal } from "features/generate-certificate";
+import { $$certificateModel } from "features/generate-certificate/model";
 import { Footer } from "pages/ui/footer";
 import { Header } from "pages/ui/header";
 import { useUniswapAuthMutation } from "shared/api";
@@ -25,6 +26,10 @@ export const Uniswap = () => {
   const userData = useGetUserQuery();
   const user = Boolean(userData.data);
   console.log(user);
+
+  useEffect(() => {
+    $$certificateModel.setCertificateType("uniswap");
+  }, []);
 
   const { connect } = useConnect({
     mutation: {

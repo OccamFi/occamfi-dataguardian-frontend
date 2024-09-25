@@ -20,6 +20,7 @@ export const GenerateCertificateModal = ({
 }: Props) => {
   const step = useUnit($$certificateModel.$step);
   const certificate = useUnit($$certificateModel.$certificate);
+  const errMsg = useUnit($$certificateModel.$errMsg);
 
   return (
     <Modal onClose={onClose}>
@@ -35,6 +36,7 @@ export const GenerateCertificateModal = ({
             {step === "download" && (
               <GenerationSuccessContent certificate={certificate} />
             )}
+            {step === "fail" && <div>{errMsg}</div>}
           </Modal.Content>
         </Modal.Overlay>
       </Portal>

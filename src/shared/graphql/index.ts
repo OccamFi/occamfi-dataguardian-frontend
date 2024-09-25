@@ -32,24 +32,29 @@ export type Scalars = {
   BigInt: { input: any; output: any };
 };
 
-export type CreateTwitterZkCertificateIn = {
+export type CreateZkCertificateIn = {
   encryptionPubKey: Scalars["Base64"]["input"];
   holderCommitment: Scalars["BigInt"]["input"];
 };
 
-export type CreateTwitterZkCertificateOut = {
-  __typename?: "CreateTwitterZKCertificateOut";
+export type CreateZkCertificateOut = {
+  __typename?: "CreateZKCertificateOut";
   certificate: Maybe<Scalars["String"]["output"]>;
   progress: Scalars["Float"]["output"];
 };
 
 export type Mutation = {
   __typename?: "Mutation";
-  createTwitterZKCertificate: CreateTwitterZkCertificateOut;
+  createTwitterZKCertificate: CreateZkCertificateOut;
+  createUniswapZKCertificate: CreateZkCertificateOut;
 };
 
 export type MutationCreateTwitterZkCertificateArgs = {
-  in: CreateTwitterZkCertificateIn;
+  in: CreateZkCertificateIn;
+};
+
+export type MutationCreateUniswapZkCertificateArgs = {
+  in: CreateZkCertificateIn;
 };
 
 export type Query = {
@@ -59,18 +64,32 @@ export type Query = {
 
 export type User = {
   __typename?: "User";
+  address: Scalars["String"]["output"];
   avatarUrl: Scalars["String"]["output"];
   username: Scalars["String"]["output"];
 };
 
 export type CreateTwitterZkCertificateMutationVariables = Exact<{
-  in: CreateTwitterZkCertificateIn;
+  in: CreateZkCertificateIn;
 }>;
 
 export type CreateTwitterZkCertificateMutation = {
   __typename?: "Mutation";
   createTwitterZKCertificate: {
-    __typename?: "CreateTwitterZKCertificateOut";
+    __typename?: "CreateZKCertificateOut";
+    certificate: string | null;
+    progress: number;
+  };
+};
+
+export type CreateUniswapZkCertificateMutationVariables = Exact<{
+  in: CreateZkCertificateIn;
+}>;
+
+export type CreateUniswapZkCertificateMutation = {
+  __typename?: "Mutation";
+  createUniswapZKCertificate: {
+    __typename?: "CreateZKCertificateOut";
     certificate: string | null;
     progress: number;
   };
@@ -80,12 +99,25 @@ export type GetUserQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetUserQuery = {
   __typename?: "Query";
-  user: { __typename?: "User"; username: string; avatarUrl: string } | null;
+  user: {
+    __typename?: "User";
+    username: string;
+    avatarUrl: string;
+    address: string;
+  } | null;
 };
 
 export const CreateTwitterZkCertificateDocument = gql`
-  mutation CreateTwitterZKCertificate($in: CreateTwitterZKCertificateIn!) {
+  mutation CreateTwitterZKCertificate($in: CreateZKCertificateIn!) {
     createTwitterZKCertificate(in: $in) {
+      certificate
+      progress
+    }
+  }
+`;
+export const CreateUniswapZkCertificateDocument = gql`
+  mutation CreateUniswapZKCertificate($in: CreateZKCertificateIn!) {
+    createUniswapZKCertificate(in: $in) {
       certificate
       progress
     }
@@ -96,6 +128,7 @@ export const GetUserDocument = gql`
     user {
       username
       avatarUrl
+      address
     }
   }
 `;
@@ -131,6 +164,22 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders }
           ),
         "CreateTwitterZKCertificate",
+        "mutation",
+        variables
+      );
+    },
+    CreateUniswapZKCertificate(
+      variables: CreateUniswapZkCertificateMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<CreateUniswapZkCertificateMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateUniswapZkCertificateMutation>(
+            CreateUniswapZkCertificateDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "CreateUniswapZKCertificate",
         "mutation",
         variables
       );

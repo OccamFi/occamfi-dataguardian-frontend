@@ -1,4 +1,4 @@
-mutation CreateTwitterZKCertificate($in: CreateTwitterZKCertificateIn!) {
+mutation CreateTwitterZKCertificate($in: CreateZKCertificateIn!) {
   createTwitterZKCertificate(in: $in) {
     certificate
     progress
