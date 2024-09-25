@@ -50,7 +50,8 @@ export const CertificateGenerationContent = ({
         <Icon className="h-6 w-9" name="occam" />
         <h3 className="mt-4 text-lg font-medium">Certificate generating</h3>
         <p className="mt-1 text-sm font-light leading-5 text-fiord">
-          You generate a certificate for X.com (Twitter)
+          You generate a certificate for{" "}
+          {certificateType === "twitter" ? "X.com (Twitter)" : "Uniswap"}
         </p>
       </header>
 
