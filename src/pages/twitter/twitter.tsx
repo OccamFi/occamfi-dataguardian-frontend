@@ -21,9 +21,11 @@ import { $$twitterModel } from "./model";
 export const Twitter = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasClicked, setHasClicked] = useLocalStorage("hasClicked", false);
-  const user = true; //useUnit($$twitterModel.$user);
+  const user = useUnit($$twitterModel.$user);
 
   useEffect(() => {
+    $$certificateModel.setCertificateType("twitter");
+
     if (user && !hasClicked) {
       setIsModalOpen(true);
       setHasClicked(true);

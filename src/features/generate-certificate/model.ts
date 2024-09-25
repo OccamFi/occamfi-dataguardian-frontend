@@ -82,12 +82,6 @@ const createModel = () => {
     target: stepApi.generation,
   });
 
-  const { tick } = interval({
-    timeout: 2000,
-    start: generateCertificate,
-    stop: setDone,
-  });
-
   sample({
     clock: generateCertificate,
     target: $dataS,
@@ -121,24 +115,31 @@ const createModel = () => {
 
   // --------- error handle
   fxs.forEach((eff) => {
-    // sample({
-    //   source: eff.failData,
-    //   target: [setDone, stepApi.fail],
-    // });
-    //
-    // sample({
-    //   source: eff.failData,
-    //   fn: (err) => {
-    //     return err.message;
-    //   },
-    //   target: $errMsg,
-    // });
-    //
-    // sample({
-    //   clock: tick,
-    //   source: $dataS,
-    //   target: generateCertificateTick,
-    // });
+    sample({
+      source: eff.failData,
+      target: [setDone, stepApi.fail],
+    });
+
+    sample({
+      source: eff.failData,
+      fn: (err) => {
+        return err.message;
+      },
+      target: $errMsg,
+    });
+  });
+
+  // --------- pending status
+  const { tick } = interval({
+    timeout: 2000,
+    start: generateCertificate,
+    stop: setDone,
+  });
+
+  sample({
+    clock: tick,
+    source: $dataS,
+    target: generateCertificateTick,
   });
 
   return {

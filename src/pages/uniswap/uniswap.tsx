@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect } from "wagmi";
 import { injected } from "wagmi/connectors";
 
 import { CertificateCard } from "entities/certificate";
 import { ProviderItem } from "entities/provider";
 import { Avatar } from "entities/provider/ui/avatar";
 import { GenerateCertificateModal } from "features/generate-certificate";
-import { $$certificateModel } from "features/generate-certificate/model";
 import { Footer } from "pages/ui/footer";
 import { Header } from "pages/ui/header";
 import { useUniswapAuthMutation } from "shared/api";
@@ -25,11 +24,6 @@ export const Uniswap = () => {
   const uniswapAuthMutation = useUniswapAuthMutation();
   const userData = useGetUserQuery();
   const user = Boolean(userData.data);
-  console.log(user);
-
-  useEffect(() => {
-    $$certificateModel.setCertificateType("uniswap");
-  }, []);
 
   const { connect } = useConnect({
     mutation: {
@@ -38,7 +32,6 @@ export const Uniswap = () => {
       },
     },
   });
-  const { disconnect } = useDisconnect();
   const { holderCommitment, encryptionPubKey } = useHolderCommitment();
 
   const handleConnectAccountClick = () => {
@@ -75,12 +68,6 @@ export const Uniswap = () => {
               >
                 Generate certificate
               </Button>
-              {/* <Button */}
-              {/*   className="py-2.5 text-sm font-semibold" */}
-              {/*   onClick={() => disconnect()} */}
-              {/* > */}
-              {/*   Disconnect */}
-              {/* </Button> */}
             </>
           ) : (
             <Button
