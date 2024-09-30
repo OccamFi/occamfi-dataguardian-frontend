@@ -21,7 +21,11 @@ export const Uniswap = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { isConnected } = useAccount();
-  const uniswapAuthMutation = useUniswapAuthMutation();
+  const uniswapAuthMutation = useUniswapAuthMutation({
+    onSuccess: () => {
+      setIsModalOpen(true);
+    },
+  });
   const userData = useGetUserQuery();
   const user = Boolean(userData.data);
 

@@ -28,7 +28,11 @@ const signApi = ({
     { withCredentials: true }
   );
 
-export const useUniswapAuthMutation = () => {
+export const useUniswapAuthMutation = ({
+  onSuccess,
+}: {
+  onSuccess(): void;
+}) => {
   const { signMessage } = useSignMessage();
   const { address } = useAccount();
   const client = useQueryClient();
@@ -37,6 +41,7 @@ export const useUniswapAuthMutation = () => {
     mutationFn: signApi,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["user"] });
+      onSuccess();
     },
   });
 
