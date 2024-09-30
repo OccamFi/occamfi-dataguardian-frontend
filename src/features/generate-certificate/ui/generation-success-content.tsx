@@ -8,10 +8,16 @@ import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
 import { downloadObjectAsJson } from "shared/utils/download-object-as-json";
 
+import { CertificateType } from "../model";
+
 type Props = {
   certificate: string;
+  certificateType: CertificateType;
 };
-export const GenerationSuccessContent = ({ certificate }: Props) => {
+export const GenerationSuccessContent = ({
+  certificate,
+  certificateType,
+}: Props) => {
   const [isDownloaded, setIsDownloaded] = useState(false);
 
   const downloadFn = async () => {
@@ -36,27 +42,46 @@ export const GenerationSuccessContent = ({ certificate }: Props) => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  let card = null;
+
+  switch (certificateType) {
+    case "twitter":
+      card = (
+        <CertificateCard
+          avatar={<Avatar onlyImage provider="twitter" />}
+          className="h-[186px] border-0 bg-gradient-to-tr from-[#5D5D5D] to-[#1B1B1B]"
+          issueDate={null}
+          title="X.com (Twitter) zkCertificate"
+        />
+      );
+      break;
+    case "uniswap":
+      card = (
+        <CertificateCard
+          avatar={<Avatar onlyImage provider="uniswap" />}
+          className="h-[186px] border-0 bg-gradient-to-tr from-[#ffe8f7] to-[#f538d0] text-black/60"
+          issueDate={null}
+          title="Uniswap zkCertificate"
+        />
+      );
+      break;
+  }
+
   return (
     <>
       <header className="mb-5 flex flex-col items-center justify-center">
         <Icon className="h-6 w-9" name="occam" />
         <h3 className="mt-4 text-center text-lg font-medium">
-          The X.com (Twitter) Certificate was successfully generated
+          {certificateType === "twitter" ? "The X.com (Twitter)" : "Uniswap"}{" "}
+          Certificate was successfully generated
         </h3>
       </header>
-
-      <CertificateCard
-        avatar={<Avatar onlyImage provider="twitter" />}
-        className="h-[186px] border-0 bg-gradient-to-tr from-[#5D5D5D] to-[#1B1B1B]"
-        issueDate={null}
-        title="X.com (Twitter) Certificate"
-      />
-
+      {card}
       <footer className="mt-5 flex flex-col gap-2 font-medium">
         {isDownloaded ? (
           <>
             <Button className="flex h-11" onClick={uploadGalaClick}>
-              Upload to Galactica
+              Upload to Wallet
             </Button>
             <div className="flex justify-center">
               <div className="flex items-center space-x-2">

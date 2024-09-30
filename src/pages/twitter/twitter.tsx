@@ -97,7 +97,7 @@ export const Twitter = () => {
                 avatar={<Avatar onlyImage provider="twitter" />}
                 className="h-[186px] max-w-[350px] basis-1/2 bg-black bg-gradient-to-tr from-[#5D5D5D] to-[#1B1B1B]"
                 issueDate="02/24"
-                title="X.com Certificate"
+                title="X.com zkCertificate"
               />
               {/* background: linear-gradient(45deg, #9DD7F5 0%, #47ACDF 100%);
                */}
@@ -105,7 +105,7 @@ export const Twitter = () => {
                 avatar={<Avatar onlyImage provider="twitter" />}
                 className="h-[186px] max-w-[350px] basis-1/2 bg-black bg-gradient-to-tr from-[#9DD7F5] to-[#47ACDF]"
                 issueDate="02/23"
-                title="Twitter Certificate"
+                title="Twitter zkCertificate"
               />
             </div>
 

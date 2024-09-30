@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-
 import { useUnit } from "effector-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
@@ -10,9 +7,10 @@ import { Checkbox } from "shared/ui/checkbox";
 import { Icon, IconName } from "shared/ui/icon";
 import { Spinner } from "shared/ui/spinner";
 
-import { $$certificateModel } from "../model";
+import { $$certificateModel, CertificateType } from "../model";
 
 type Props = {
+  certificateType: CertificateType;
   encryptionPubKey: string;
   holderCommitment: string;
 };
@@ -20,21 +18,8 @@ type Props = {
 export const CertificateGenerationContent = ({
   encryptionPubKey,
   holderCommitment,
+  certificateType,
 }: Props) => {
-  const [certificateType, setCertificateType] = useState<"twitter" | "uniswap">(
-    "twitter"
-  );
-  const location = useLocation();
-
-  useEffect(() => {
-    // @TODO:
-    if (location.pathname.includes("uniswap")) {
-      setCertificateType("uniswap");
-    } else {
-      setCertificateType("twitter");
-    }
-  }, [location.pathname]);
-
   const step = useUnit($$certificateModel.$step);
   const handleClick = () => {
     $$certificateModel.generateCertificate({
@@ -43,6 +28,7 @@ export const CertificateGenerationContent = ({
       holderCommitment,
     });
   };
+  const fields = certificateType === "twitter" ? twitterFields : uniswapFields;
 
   return (
     <>
@@ -87,7 +73,7 @@ export const CertificateGenerationContent = ({
         </div>
 
         <ul className="mt-5 flex flex-col gap-y-3">
-          {twitterFields.map((item, index) => {
+          {fields.map((item, index) => {
             return (
               <li className="flex gap-x-3" key={`${item.iconName}-${index}`}>
                 <Icon className="text-dodgerBlue" name={item.iconName} />
@@ -141,26 +127,10 @@ const twitterFields: { iconName: IconName; text: string }[] = [
 const uniswapFields: { iconName: IconName; text: string }[] = [
   {
     iconName: "userCircle",
-    text: "Username & X id",
+    text: "Wallet address",
   },
   {
     iconName: "checkCircle",
-    text: "Date of creation ",
-  },
-  {
-    iconName: "users",
-    text: "Number of followers",
-  },
-  {
-    iconName: "users",
-    text: "Number of following",
-  },
-  {
-    iconName: "fileHeart",
-    text: "Number of tweets",
-  },
-  {
-    iconName: "checkVerified",
-    text: "Verification status",
+    text: "History of swaps",
   },
 ];
