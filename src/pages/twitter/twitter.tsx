@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
-import { useLocalStorage } from "@uidotdev/usehooks";
 import { useUnit } from "effector-react";
 
 import { CertificateCard } from "entities/certificate";
@@ -20,17 +19,17 @@ import { $$twitterModel } from "./model";
 
 export const Twitter = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hasClicked, setHasClicked] = useLocalStorage("hasClicked", false);
   const user = useUnit($$twitterModel.$user);
+  const [searchParams] = useSearchParams();
+  const redirect = Boolean(searchParams.get("redirect"));
 
   useEffect(() => {
     $$certificateModel.setCertificateType("twitter");
 
-    if (user && !hasClicked) {
+    if (user && redirect) {
       setIsModalOpen(true);
-      setHasClicked(true);
     }
-  }, [user, hasClicked, setHasClicked]);
+  }, [user, redirect]);
 
   const { holderCommitment, encryptionPubKey } = useHolderCommitment();
 
