@@ -7,7 +7,6 @@ import { CertificateCard } from "entities/certificate";
 import { ProviderItem } from "entities/provider";
 import { Avatar } from "entities/provider/ui/avatar";
 import { GenerateCertificateModal } from "features/generate-certificate";
-import { $$certificateModel } from "features/generate-certificate/model";
 import { Footer } from "pages/ui/footer";
 import { Header } from "pages/ui/header";
 import { useHolderCommitment } from "shared/providers/holder-commitment-guard";
@@ -24,8 +23,6 @@ export const Twitter = () => {
   const redirect = Boolean(searchParams.get("redirect"));
 
   useEffect(() => {
-    $$certificateModel.setCertificateType("twitter");
-
     if (user && redirect) {
       setIsModalOpen(true);
     }

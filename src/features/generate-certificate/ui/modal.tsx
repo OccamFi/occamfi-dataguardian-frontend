@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import { useUnit } from "effector-react";
 
+import { Provider } from "entities/provider";
 import { Modal } from "shared/ui/modal";
 import { ModalProps } from "shared/ui/modal/modal";
 import { Portal } from "shared/ui/portal";
@@ -21,9 +22,7 @@ export const GenerateCertificateModal = ({
   holderCommitment,
   onClose,
 }: Props) => {
-  const [certificateType, setCertificateType] = useState<"twitter" | "uniswap">(
-    "twitter"
-  );
+  const [provider, setProvider] = useState<Provider>("twitter");
   const step = useUnit($$certificateModel.$step);
   const certificate = useUnit($$certificateModel.$certificate);
   const errMsg = useUnit($$certificateModel.$errMsg);
@@ -33,9 +32,9 @@ export const GenerateCertificateModal = ({
   useEffect(() => {
     // @TODO:
     if (location.pathname.includes("uniswap")) {
-      setCertificateType("uniswap");
+      setProvider("uniswap");
     } else {
-      setCertificateType("twitter");
+      setProvider("twitter");
     }
   }, [location.pathname]);
 
@@ -46,15 +45,15 @@ export const GenerateCertificateModal = ({
           <Modal.Content className="w-[400px] px-6 pb-6 pt-9">
             {step === "generation" || step === "idle" ? (
               <CertificateGenerationContent
-                certificateType={certificateType}
                 encryptionPubKey={encryptionPubKey}
                 holderCommitment={holderCommitment}
+                provider={provider}
               />
             ) : null}
             {step === "download" && (
               <GenerationSuccessContent
                 certificate={certificate}
-                certificateType={certificateType}
+                provider={provider}
               />
             )}
             {step === "fail" && <div>{errMsg}</div>}

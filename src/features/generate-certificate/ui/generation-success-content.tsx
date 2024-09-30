@@ -3,21 +3,18 @@ import { useState } from "react";
 import axios from "axios";
 
 import { CertificateCard } from "entities/certificate";
+import { Provider } from "entities/provider";
 import { Avatar } from "entities/provider/ui/avatar";
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
+import { capitalizeFirstLetter } from "shared/utils";
 import { downloadObjectAsJson } from "shared/utils/download-object-as-json";
-
-import { CertificateType } from "../model";
 
 type Props = {
   certificate: string;
-  certificateType: CertificateType;
+  provider: Provider;
 };
-export const GenerationSuccessContent = ({
-  certificate,
-  certificateType,
-}: Props) => {
+export const GenerationSuccessContent = ({ certificate, provider }: Props) => {
   const [isDownloaded, setIsDownloaded] = useState(false);
 
   const downloadFn = async () => {
@@ -26,7 +23,10 @@ export const GenerationSuccessContent = ({
       const res = await axios.get(url);
       const data = res.data;
 
-      downloadObjectAsJson(JSON.stringify(data), "cert.json");
+      downloadObjectAsJson(
+        JSON.stringify(data),
+        `${capitalizeFirstLetter(provider)}-zkCert.json`
+      );
     } catch (err) {
       console.log("Request certificate error: ", err);
     }
@@ -44,7 +44,7 @@ export const GenerationSuccessContent = ({
 
   let card = null;
 
-  switch (certificateType) {
+  switch (provider) {
     case "twitter":
       card = (
         <CertificateCard
@@ -72,7 +72,7 @@ export const GenerationSuccessContent = ({
       <header className="mb-5 flex flex-col items-center justify-center">
         <Icon className="h-6 w-9" name="occam" />
         <h3 className="mt-4 text-center text-lg font-medium">
-          {certificateType === "twitter" ? "The X.com (Twitter)" : "Uniswap"}{" "}
+          {provider === "twitter" ? "The X.com (Twitter)" : "Uniswap"}{" "}
           Certificate was successfully generated
         </h3>
       </header>

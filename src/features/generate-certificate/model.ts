@@ -9,6 +9,7 @@ import {
 } from "effector";
 import { interval } from "patronum";
 
+import { Provider } from "entities/provider";
 import { graphqlSdk } from "shared/graphql/client";
 
 export type HolderCommitmentProps = {
@@ -17,28 +18,24 @@ export type HolderCommitmentProps = {
 };
 
 export type CertificateStep = "download" | "fail" | "generation" | "idle";
-export type CertificateType = "twitter" | "uniswap";
 
 const createModel = () => {
   const generateCertificate = createEvent<
-    HolderCommitmentProps & { certificateType: CertificateType }
+    HolderCommitmentProps & { provider: Provider }
   >();
   const generateCertificateTick = createEvent<
-    HolderCommitmentProps & { certificateType: CertificateType }
+    HolderCommitmentProps & { provider: Provider }
   >();
 
   const setDone = createEvent();
-  const setCertificateType = createEvent<CertificateType>();
 
   const $step = createStore<CertificateStep>("idle");
   const $errMsg = createStore("");
   const $certificate = createStore("");
-  const $dataS = createStore<
-    HolderCommitmentProps & { certificateType: CertificateType }
-  >({
+  const $dataS = createStore<HolderCommitmentProps & { provider: Provider }>({
     encryptionPubKey: "",
     holderCommitment: "",
-    certificateType: "twitter",
+    provider: "twitter",
   });
 
   const generateTwitterFx = createEffect(
@@ -61,8 +58,8 @@ const createModel = () => {
   split({
     source: merge([generateCertificate, generateCertificateTick]),
     match: {
-      twitter: ({ certificateType }) => certificateType === "twitter",
-      uniswap: ({ certificateType }) => certificateType === "uniswap",
+      twitter: ({ provider }) => provider === "twitter",
+      uniswap: ({ provider }) => provider === "uniswap",
     },
     cases: {
       twitter: generateTwitterFx,
@@ -147,7 +144,6 @@ const createModel = () => {
     $certificate,
     $errMsg,
     generateCertificate,
-    setCertificateType,
   };
 };
 

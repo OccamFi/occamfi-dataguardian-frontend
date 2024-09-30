@@ -13,3 +13,7 @@ export function downloadTxtFile(text: string, filename: string) {
 
   document.body.removeChild(element);
 }
+
+export function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

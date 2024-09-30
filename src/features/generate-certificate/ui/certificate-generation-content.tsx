@@ -2,33 +2,34 @@ import { useUnit } from "effector-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
+import { Provider } from "entities/provider";
 import { Button } from "shared/ui/button";
 import { Checkbox } from "shared/ui/checkbox";
 import { Icon, IconName } from "shared/ui/icon";
 import { Spinner } from "shared/ui/spinner";
 
-import { $$certificateModel, CertificateType } from "../model";
+import { $$certificateModel } from "../model";
 
 type Props = {
-  certificateType: CertificateType;
   encryptionPubKey: string;
   holderCommitment: string;
+  provider: Provider;
 };
 
 export const CertificateGenerationContent = ({
   encryptionPubKey,
   holderCommitment,
-  certificateType,
+  provider,
 }: Props) => {
   const step = useUnit($$certificateModel.$step);
   const handleClick = () => {
     $$certificateModel.generateCertificate({
-      certificateType,
+      provider,
       encryptionPubKey,
       holderCommitment,
     });
   };
-  const fields = certificateType === "twitter" ? twitterFields : uniswapFields;
+  const fields = provider === "twitter" ? twitterFields : uniswapFields;
 
   return (
     <>
@@ -37,7 +38,7 @@ export const CertificateGenerationContent = ({
         <h3 className="mt-4 text-lg font-medium">Certificate generating</h3>
         <p className="mt-1 text-sm font-light leading-5 text-fiord">
           You generate a certificate for{" "}
-          {certificateType === "twitter" ? "X.com (Twitter)" : "Uniswap"}
+          {provider === "twitter" ? "X.com (Twitter)" : "Uniswap"}
         </p>
       </header>
 
