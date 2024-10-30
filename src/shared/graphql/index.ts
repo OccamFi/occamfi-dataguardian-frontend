@@ -45,8 +45,13 @@ export type CreateZkCertificateOut = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  createBinanceZKCertificate: CreateZkCertificateOut;
   createTwitterZKCertificate: CreateZkCertificateOut;
   createUniswapZKCertificate: CreateZkCertificateOut;
+};
+
+export type MutationCreateBinanceZkCertificateArgs = {
+  in: CreateZkCertificateIn;
 };
 
 export type MutationCreateTwitterZkCertificateArgs = {
@@ -67,6 +72,19 @@ export type User = {
   address: Scalars["String"]["output"];
   avatarUrl: Scalars["String"]["output"];
   username: Scalars["String"]["output"];
+};
+
+export type CreateBinanceZkCertificateMutationVariables = Exact<{
+  in: CreateZkCertificateIn;
+}>;
+
+export type CreateBinanceZkCertificateMutation = {
+  __typename?: "Mutation";
+  createBinanceZKCertificate: {
+    __typename?: "CreateZKCertificateOut";
+    certificate: string | null;
+    progress: number;
+  };
 };
 
 export type CreateTwitterZkCertificateMutationVariables = Exact<{
@@ -107,6 +125,14 @@ export type GetUserQuery = {
   } | null;
 };
 
+export const CreateBinanceZkCertificateDocument = gql`
+  mutation CreateBinanceZKCertificate($in: CreateZKCertificateIn!) {
+    createBinanceZKCertificate(in: $in) {
+      certificate
+      progress
+    }
+  }
+`;
 export const CreateTwitterZkCertificateDocument = gql`
   mutation CreateTwitterZKCertificate($in: CreateZKCertificateIn!) {
     createTwitterZKCertificate(in: $in) {
@@ -152,6 +178,22 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper
 ) {
   return {
+    CreateBinanceZKCertificate(
+      variables: CreateBinanceZkCertificateMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<CreateBinanceZkCertificateMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateBinanceZkCertificateMutation>(
+            CreateBinanceZkCertificateDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "CreateBinanceZKCertificate",
+        "mutation",
+        variables
+      );
+    },
     CreateTwitterZKCertificate(
       variables: CreateTwitterZkCertificateMutationVariables,
       requestHeaders?: GraphQLClientRequestHeaders

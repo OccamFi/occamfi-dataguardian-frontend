@@ -28,6 +28,18 @@ const signApi = ({
     { withCredentials: true }
   );
 
+const binanceSignInApi = ({
+  key,
+  secret,
+}: {
+  key: string;
+  secret: string;
+}): Promise<{ data: { success: boolean } }> =>
+  axios.post(`${url}/binance/sign-in`, {
+    key,
+    secret,
+  });
+
 export const useUniswapAuthMutation = ({
   onSuccess,
 }: {
@@ -61,5 +73,11 @@ export const useUniswapAuthMutation = ({
         }
       );
     },
+  });
+};
+
+export const useBinanceAuthMutation = () => {
+  return useMutation({
+    mutationFn: binanceSignInApi,
   });
 };

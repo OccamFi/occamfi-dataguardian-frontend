@@ -1,0 +1,6 @@
+mutation CreateBinanceZKCertificate($in: CreateZKCertificateIn!) {
+  createBinanceZKCertificate(in: $in) {
+    certificate
+    progress
+  }
+}

@@ -52,6 +52,13 @@ const createModel = () => {
       });
     }
   );
+  const generateBinanceFx = createEffect(
+    async ({ encryptionPubKey, holderCommitment }: HolderCommitmentProps) => {
+      return await graphqlSdk.CreateBinanceZKCertificate({
+        in: { encryptionPubKey, holderCommitment },
+      });
+    }
+  );
 
   const fxs = [generateUniswapFx];
 
@@ -60,10 +67,12 @@ const createModel = () => {
     match: {
       twitter: ({ provider }) => provider === "twitter",
       uniswap: ({ provider }) => provider === "uniswap",
+      binance: ({ provider }) => provider === "binance",
     },
     cases: {
       twitter: generateTwitterFx,
       uniswap: generateUniswapFx,
+      binance: generateBinanceFx,
     },
   });
 
@@ -97,6 +106,12 @@ const createModel = () => {
     target: $certificate,
   });
 
+  sample({
+    source: generateBinanceFx.doneData,
+    fn: (data) => data.createBinanceZKCertificate.certificate ?? "",
+    target: $certificate,
+  });
+
   // --------- save progress
   sample({
     source: generateTwitterFx.doneData,
@@ -107,6 +122,12 @@ const createModel = () => {
   sample({
     source: generateUniswapFx.doneData,
     filter: (data) => Boolean(data?.createUniswapZKCertificate?.progress === 1),
+    target: [setDone, stepApi.download],
+  });
+
+  sample({
+    source: generateBinanceFx.doneData,
+    filter: (data) => Boolean(data?.createBinanceZKCertificate?.progress === 1),
     target: [setDone, stepApi.download],
   });
 

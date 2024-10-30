@@ -1,4 +1,5 @@
 import apple from "./assets/apple.svg";
+import binance from "./assets/binance.png";
 import discord from "./assets/discord.svg";
 import facebook from "./assets/facebook.svg";
 import instagram from "./assets/instagram-logo.png";
@@ -27,6 +28,14 @@ export const providers = {
     // link: "/provider/telegram",
     link: "/provider/uniswap",
     name: "Uniswap",
+  },
+  binance: {
+    type: "CEX",
+    description: "CEX",
+    imageSrc: binance,
+    // link: "/provider/telegram",
+    link: "/provider/binance",
+    name: "Binance",
   },
   telegram: {
     type: "Social media",

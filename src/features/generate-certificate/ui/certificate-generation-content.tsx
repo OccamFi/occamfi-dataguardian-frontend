@@ -2,7 +2,7 @@ import { useUnit } from "effector-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
-import { Provider } from "entities/provider";
+import { Provider, providers } from "entities/provider";
 import { Button } from "shared/ui/button";
 import { Checkbox } from "shared/ui/checkbox";
 import { Icon, IconName } from "shared/ui/icon";
@@ -29,7 +29,8 @@ export const CertificateGenerationContent = ({
       holderCommitment,
     });
   };
-  const fields = provider === "twitter" ? twitterFields : uniswapFields;
+  const fields = fieldsMap[provider];
+  const name = providers[provider].name;
 
   return (
     <>
@@ -37,8 +38,7 @@ export const CertificateGenerationContent = ({
         <Icon className="h-6 w-9" name="occam" />
         <h3 className="mt-4 text-lg font-medium">Certificate generating</h3>
         <p className="mt-1 text-sm font-light leading-5 text-fiord">
-          You generate a certificate for{" "}
-          {provider === "twitter" ? "X.com (Twitter)" : "Uniswap"}
+          You generate a certificate for {name}
         </p>
       </header>
 
@@ -98,40 +98,57 @@ export const CertificateGenerationContent = ({
   );
 };
 
-const twitterFields: { iconName: IconName; text: string }[] = [
-  {
-    iconName: "userCircle",
-    text: "Username & X id",
-  },
-  {
-    iconName: "checkCircle",
-    text: "Date of creation ",
-  },
-  {
-    iconName: "users",
-    text: "Number of followers",
-  },
-  {
-    iconName: "users",
-    text: "Number of following",
-  },
-  {
-    iconName: "fileHeart",
-    text: "Number of tweets",
-  },
-  {
-    iconName: "checkVerified",
-    text: "Verification status",
-  },
-];
-
-const uniswapFields: { iconName: IconName; text: string }[] = [
-  {
-    iconName: "userCircle",
-    text: "Wallet address",
-  },
-  {
-    iconName: "checkCircle",
-    text: "History of swaps",
-  },
-];
+const fieldsMap: Record<Provider, { iconName: IconName; text: string }[]> = {
+  binance: [
+    {
+      iconName: "userCircle",
+      text: "Historical trading amounts",
+    },
+  ],
+  uniswap: [
+    {
+      iconName: "userCircle",
+      text: "Wallet address",
+    },
+    {
+      iconName: "checkCircle",
+      text: "History of swaps",
+    },
+  ],
+  twitter: [
+    {
+      iconName: "userCircle",
+      text: "Username & X id",
+    },
+    {
+      iconName: "checkCircle",
+      text: "Date of creation ",
+    },
+    {
+      iconName: "users",
+      text: "Number of followers",
+    },
+    {
+      iconName: "users",
+      text: "Number of following",
+    },
+    {
+      iconName: "fileHeart",
+      text: "Number of tweets",
+    },
+    {
+      iconName: "checkVerified",
+      text: "Verification status",
+    },
+  ],
+  apple: [],
+  discord: [],
+  facebook: [],
+  instagram: [],
+  payPal: [],
+  reddit: [],
+  snapchat: [],
+  telegram: [],
+  tikTok: [],
+  weibo: [],
+};
